@@ -10,6 +10,7 @@ require("dotenv").config();
 
 var keys = require("./keys.js");
 
+
 // var request = require("request");
 var command = process.argv[2];
 var query = process.argv[3];
@@ -25,10 +26,14 @@ var concertThis = function(concertQuery){
 		concertQuery = "Creed";
 	}
 	request("https://rest.bandsintown.com/artists/" + concertQuery + "?app_id=codingbootcamp", function(err, response, body){
+
+	var jsonData = JSON.parse(body);
+
 	if (!err && response.statusCode === 200){
-		console.log("Artist: " +  JSON.parse(body).name);
-		console.log("Fans Tracking: " + JSON.parse(body).tracker_count);
-		console.log("Upcoming Events: " +JSON.parse(body).upcoming_event_count);
+		console.log("Artist: " +  jsonData.name);
+		console.log("Fans Tracking: " + jsonData.tracker_count);
+		console.log("Upcoming Events: " +jsonData.upcoming_event_count);
+		console.log(body);
 		
 	}
 	});
@@ -73,14 +78,17 @@ var movieThis = function(movieQuery) {
 
 	// HTTP GET request
 	request("http://www.omdbapi.com/?t=" + movieQuery + "&y=&plot=short&r=json&apikey=61a59595", function(err, response, body) {
+
+	var jsonData = JSON.parse(body);
+
 	  if (!err && response.statusCode === 200) {
-	    console.log("* Title of the movie:         " + JSON.parse(body).Title);
-	    console.log("* Year the movie came out:    " + JSON.parse(body).Year);
-	    console.log("* IMDB Rating of the movie:   " + JSON.parse(body).imdbRating);
-	    console.log("* Country produced:           " + JSON.parse(body).Country);
-	    console.log("* Language of the movie:      " + JSON.parse(body).Language);
-	    console.log("* Plot of the movie:          " + JSON.parse(body).Plot);
-	    console.log("* Actors in the movie:        " + JSON.parse(body).Actors);
+	    console.log("* Title of the movie:         " + jsonData.Title);
+	    console.log("* Year the movie came out:    " + jsonData.Year);
+	    console.log("* IMDB Rating of the movie:   " + jsonData.imdbRating);
+	    console.log("* Country produced:           " + jsonData.Country);
+	    console.log("* Language of the movie:      " + jsonData.Language);
+	    console.log("* Plot of the movie:          " + jsonData.Plot);
+	    console.log("* Actors in the movie:        " + jsonData.Actors);
 
 	    // For loop parses through Ratings object to see if there is a RT rating
 	    // 	--> and if there is, it will print it
@@ -95,7 +103,7 @@ var movieThis = function(movieQuery) {
 	  }
 	});
 }
-if (command === "concertThis"){
+if (command === "concert-this"){
 	concertThis(query);
 }else if (command === "spotify-this-song"){
     spotifyThisSong(query);
