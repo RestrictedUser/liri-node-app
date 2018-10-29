@@ -15,16 +15,16 @@ var concertThis = function(concertQuery){
 	var request = require("request");
 
 	if(concertQuery === undefined){
-		concertQuery = "Creed";
+		concertQuery = "go";
 	}
-	request("https://rest.bandsintown.com/artists/" + concertQuery + "?app_id=codingbootcamp", function(err, response, body){
+	request("https://rest.bandsintown.com/artists/" + concertQuery + "/events?app_id=codingbootcamp", function(err, response, body){
 
 	var jsonData = JSON.parse(body);
 
 	if (!err && response.statusCode === 200){
-		console.log("Artist: " +  jsonData.name);
-		console.log("Fans Tracking: " + jsonData.tracker_count);
-		console.log("Upcoming Events: " +jsonData.upcoming_event_count);
+		console.log("Venue Name: " +  jsonData[0].venue.name);
+		console.log("Venue Location: " + jsonData[0].venue.city);
+		console.log("Date of Event: " +jsonData[0].datetime);
 		// console.log(body);
 		
 	}
