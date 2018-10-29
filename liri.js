@@ -1,17 +1,9 @@
-// notes:
-// what api call will find the event date and venue location including date of event
-// need to add screen shots to read me of all 3 api calls working in terminal!!!!
-// 
-
-
-
 
 require("dotenv").config();
 
 var keys = require("./keys.js");
 
 
-// var request = require("request");
 var command = process.argv[2];
 var query = process.argv[3];
 var Spotify = require("node-spotify-api");
@@ -33,7 +25,7 @@ var concertThis = function(concertQuery){
 		console.log("Artist: " +  jsonData.name);
 		console.log("Fans Tracking: " + jsonData.tracker_count);
 		console.log("Upcoming Events: " +jsonData.upcoming_event_count);
-		console.log(body);
+		// console.log(body);
 		
 	}
 	});
@@ -67,16 +59,15 @@ var spotifyThisSong = function(trackQuery){
 
 }
 
+// OMDB 
 var movieThis = function(movieQuery) {
-	// Load request npm module
+	
 	var request = require("request");
 
-	// if query that is passed in is undefined, Mr. Nobody becomes the default
 	if(movieQuery === undefined) {
 		movieQuery = "mr nobody";
 	}
 
-	// HTTP GET request
 	request("http://www.omdbapi.com/?t=" + movieQuery + "&y=&plot=short&r=json&apikey=61a59595", function(err, response, body) {
 
 	var jsonData = JSON.parse(body);
@@ -90,13 +81,11 @@ var movieThis = function(movieQuery) {
 	    console.log("* Plot of the movie:          " + jsonData.Plot);
 	    console.log("* Actors in the movie:        " + jsonData.Actors);
 
-	    // For loop parses through Ratings object to see if there is a RT rating
-	    // 	--> and if there is, it will print it
-	    for(var i = 0; i < JSON.parse(body).Ratings.length; i++) {
-	    	if(JSON.parse(body).Ratings[i].Source === "Rotten Tomatoes") {
-	    		console.log("* Rotten Tomatoes Rating:     " + JSON.parse(body).Ratings[i].Value);
-	    		if(JSON.parse(body).Ratings[i].Website !== undefined) {
-	    			console.log("* Rotten Tomatoes URL:        " + JSON.parse(body).Ratings[i].Website);
+	    for(var i = 0; i < jsonData.Ratings.length; i++) {
+	    	if(jsonData.Ratings[i].Source === "Rotten Tomatoes") {
+	    		console.log("* Rotten Tomatoes Rating:     " + jsonData.Ratings[i].Value);
+	    		if(jsonData.Ratings[i].Website !== undefined) {
+	    			console.log("* Rotten Tomatoes URL:        " + jsonData.Ratings[i].Website);
 	    		}
 	    	}
 	    }
@@ -110,18 +99,16 @@ if (command === "concert-this"){
 }else if(command === "movie-this") {
 	movieThis(query);
 } else if(command === "do-what-it-says") {
-	// App functionality from file read / loads fs npm package
+	
 	var fs = require("fs");
 
 	fs.readFile("random.txt", "utf8", function(err, data) {
-		if(err) { // if error
-	        console.log('Error occurred: ' + err);
+		if(err) { 
+	        console.log(err);
 	    }
 		var command;
 		var query;
 
-		// If there is a comma, then we will split the string from file in order to differentiate between the command and query
-		// 	--> if there is no comma, then only the command is considered (my-tweets)
 		if(data.indexOf(",") !== -1) {
 			var dataArr = data.split(",");
 			command = dataArr[0];
@@ -130,18 +117,17 @@ if (command === "concert-this"){
 			command = data;
 		}
 
-		// After reading the command from the file, decides which app function to run
 		
 		if(command === "spotify-this-song") {
 			spotifyThisSong(query);
 		} else if(command === "movie-this") {
 			movieThis(query);
-		} else { // Use case where the command is not recognized
-			console.log("Command from file is not a valid command! Please try again.")
+		} else { 
+			console.log("Command invalid!");
 		}
 	});
-} else if(command === undefined) { // use case where no command is given
-	console.log("Please enter a command to run LIRI.")
-} else { // use case where command is given but not recognized
-	console.log("Command not recognized! Please try again.")
+} else if(command === undefined) { 
+	console.log("LIRI Bot needs a command to run.");
+} else { 
+	console.log("Command not recognized! Please try again.");
 }
