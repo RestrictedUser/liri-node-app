@@ -1,6 +1,6 @@
 // notes:
 // what api call will find the event date and venue location including date of event
-// 
+// need to add screen shots to read me of all 3 api calls working in terminal!!!!
 // 
 
 
