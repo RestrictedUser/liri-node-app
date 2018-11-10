@@ -1,5 +1,5 @@
 # liri-node-app
- Description: This application was made to provide users commands through terminal for spotify songs/concert venues/ and movie info
+ Description: A fun application for movie/music and concert fans to search for information from multiple API's on their favorite musicians and movies.
  
  COMMANDS: 
  
@@ -18,3 +18,6 @@
  THIS COMMAND TAKES AN ARTIST FROM A PREMADE TEXTFILE AND DISPLAYS THEIR INFORMATION
  --do-what-it-says (for a premade textfile selection)
 ![alt text](https://github.com/RestrictedUser/liri-node-app/blob/master/images/Liri-screenshots/do-what-it-says(fs.readFile).PNG?raw=true)
+
+CREATED BY: Tyler Middleton
+Link to my portfolio: https://restricteduser.github.io/Bootstrap-Portfolio/
