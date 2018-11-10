@@ -20,4 +20,5 @@
 ![alt text](https://github.com/RestrictedUser/liri-node-app/blob/master/images/Liri-screenshots/do-what-it-says(fs.readFile).PNG?raw=true)
 
 CREATED BY: Tyler Middleton
+
 Link to my portfolio: https://restricteduser.github.io/Bootstrap-Portfolio/
